@@ -14,7 +14,6 @@ go get github.com/refaldyrk/otpweb_wrapper_api
 ```go
 
 w := wrapper.NewWrapper("apikey")
-
 ```
 
 ### Get Balance
