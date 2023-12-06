@@ -8,6 +8,10 @@ import (
 	"net/http"
 )
 
+// GetService mengambil daftar layanan dari layanan OTPWeb menggunakan kunci API yang diberikan dan ID negara.
+// Fungsi ini memerlukan satu parameter yaitu countryID (ID negara).
+// Fungsi ini mengembalikan struktur data model.GetService yang berisi daftar layanan yang diperoleh,
+// dan struktur data model.Error jika terjadi kesalahan selama pengambilan daftar layanan.
 func (w *Wrapper) GetService(countryID int) (model.GetService, model.Error) {
 	getService, err := http.Get(fmt.Sprintf("https://otpweb.com/api?api_key=%s&action=get_service&country_id=%d", w.APIkey, countryID))
 
@@ -47,6 +51,10 @@ func (w *Wrapper) GetService(countryID int) (model.GetService, model.Error) {
 	return data, model.Error{}
 }
 
+// GetSpecialService mengambil daftar layanan khusus dari layanan OTPWeb menggunakan kunci API yang diberikan.
+// Fungsi ini tidak memerlukan parameter tambahan.
+// Fungsi ini mengembalikan struktur data model.GetSpecialService yang berisi daftar layanan khusus yang diperoleh,
+// dan struktur data model.Error jika terjadi kesalahan selama pengambilan daftar layanan khusus.
 func (w *Wrapper) GetSpecialService() (model.GetSpecialService, model.Error) {
 	getSpecialService, err := http.Get(fmt.Sprintf("https://otpweb.com/api?api_key=%s&action=get_spesialService", w.APIkey))
 

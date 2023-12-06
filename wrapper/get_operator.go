@@ -8,6 +8,10 @@ import (
 	"net/http"
 )
 
+// GetOperator mengambil daftar operator dari layanan OTPWeb menggunakan kunci API yang diberikan.
+// Fungsi ini tidak memerlukan parameter tambahan.
+// Fungsi ini mengembalikan struktur data model.GetOperator yang berisi daftar operator yang diperoleh,
+// dan struktur data model.Error jika terjadi kesalahan selama pengambilan daftar operator.
 func (w *Wrapper) GetOperator() (model.GetOperator, model.Error) {
 	getOperator, err := http.Get(fmt.Sprintf("https://otpweb.com/api?api_key=%s&action=operators", w.APIkey))
 

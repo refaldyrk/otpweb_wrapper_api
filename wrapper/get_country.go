@@ -8,6 +8,9 @@ import (
 	"net/http"
 )
 
+// GetCountry mengambil data negara dari layanan OTPWeb menggunakan kunci API yang diberikan.
+// Fungsi ini mengembalikan struktur data model.GetCountry yang berisi informasi negara,
+// dan struktur data model.Error jika terjadi kesalahan selama pengambilan data negara.
 func (w *Wrapper) GetCountry() (model.GetCountry, model.Error) {
 	getCountry, err := http.Get(fmt.Sprintf("https://otpweb.com/api?api_key=%s&action=country", w.APIkey))
 

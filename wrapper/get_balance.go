@@ -8,6 +8,9 @@ import (
 	"net/http"
 )
 
+// GetBalance mengambil saldo dari layanan OTPWeb menggunakan kunci API yang diberikan.
+// Fungsi ini mengembalikan struktur data model.GetBalance yang berisi informasi saldo,
+// dan struktur data model.Error jika terjadi kesalahan selama pengambilan saldo.
 func (w *Wrapper) GetBalance() (model.GetBalance, model.Error) {
 	getBalance, err := http.Get(fmt.Sprintf("https://otpweb.com/api?api_key=%s&action=balance", w.APIkey))
 	if err != nil {
