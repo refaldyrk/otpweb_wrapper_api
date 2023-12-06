@@ -8,11 +8,12 @@ import (
 	"net/http"
 )
 
-func (w *Wrapper) GetService(countryID int) (model.GetService, error) {
+func (w *Wrapper) GetService(countryID int) (model.GetService, model.Error) {
 	getService, err := http.Get(fmt.Sprintf("https://otpweb.com/api?api_key=%s&action=get_service&country_id=%d", w.APIkey, countryID))
 
 	if err != nil {
-		return model.GetService{}, err
+		fmt.Println(err)
+		return model.GetService{}, model.Error{}
 	}
 
 	defer func(Body io.ReadCloser) {
@@ -26,22 +27,32 @@ func (w *Wrapper) GetService(countryID int) (model.GetService, error) {
 
 	body, err := io.ReadAll(getService.Body)
 	if err != nil {
-		return model.GetService{}, err
+		fmt.Println(err)
+		return model.GetService{}, model.Error{}
 	}
 
 	err = json.Unmarshal(body, &data)
 	if err != nil {
-		return model.GetService{}, err
+		fmt.Println(err)
+		return model.GetService{}, model.Error{}
 	}
 
-	return data, nil
+	if !data.Status {
+		var errorResp model.Error
+		json.Unmarshal(body, &errorResp)
+
+		return model.GetService{}, errorResp
+	}
+
+	return data, model.Error{}
 }
 
-func (w *Wrapper) GetSpecialService() (model.GetSpecialService, error) {
+func (w *Wrapper) GetSpecialService() (model.GetSpecialService, model.Error) {
 	getSpecialService, err := http.Get(fmt.Sprintf("https://otpweb.com/api?api_key=%s&action=get_spesialService", w.APIkey))
 
 	if err != nil {
-		return model.GetSpecialService{}, err
+		fmt.Println(err)
+		return model.GetSpecialService{}, model.Error{}
 	}
 
 	defer func(Body io.ReadCloser) {
@@ -55,13 +66,22 @@ func (w *Wrapper) GetSpecialService() (model.GetSpecialService, error) {
 
 	body, err := io.ReadAll(getSpecialService.Body)
 	if err != nil {
-		return model.GetSpecialService{}, err
+		fmt.Println(err)
+		return model.GetSpecialService{}, model.Error{}
 	}
 
 	err = json.Unmarshal(body, &data)
 	if err != nil {
-		return model.GetSpecialService{}, err
+		fmt.Println(err)
+		return model.GetSpecialService{}, model.Error{}
 	}
 
-	return data, nil
+	if !data.Status {
+		var errorResp model.Error
+		json.Unmarshal(body, &errorResp)
+
+		return model.GetSpecialService{}, errorResp
+	}
+
+	return data, model.Error{}
 }

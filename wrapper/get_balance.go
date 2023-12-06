@@ -8,10 +8,11 @@ import (
 	"net/http"
 )
 
-func (w *Wrapper) GetBalance() (model.GetBalance, error) {
+func (w *Wrapper) GetBalance() (model.GetBalance, model.Error) {
 	getBalance, err := http.Get(fmt.Sprintf("https://otpweb.com/api?api_key=%s&action=balance", w.APIkey))
 	if err != nil {
-		return model.GetBalance{}, err
+		fmt.Println(err)
+		return model.GetBalance{}, model.Error{}
 	}
 
 	defer func(Body io.ReadCloser) {
@@ -25,13 +26,21 @@ func (w *Wrapper) GetBalance() (model.GetBalance, error) {
 
 	body, err := io.ReadAll(getBalance.Body)
 	if err != nil {
-		return model.GetBalance{}, err
+		fmt.Println(err)
+		return model.GetBalance{}, model.Error{}
 	}
 
 	err = json.Unmarshal(body, &data)
 	if err != nil {
-		return model.GetBalance{}, err
+		return model.GetBalance{}, model.Error{}
 	}
 
-	return data, nil
+	if !data.Status {
+		var errorResp model.Error
+		json.Unmarshal(body, &errorResp)
+
+		return model.GetBalance{}, errorResp
+	}
+
+	return data, model.Error{}
 }

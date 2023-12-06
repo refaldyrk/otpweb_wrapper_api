@@ -8,11 +8,12 @@ import (
 	"net/http"
 )
 
-func (w *Wrapper) GetOperator() (model.GetOperator, error) {
+func (w *Wrapper) GetOperator() (model.GetOperator, model.Error) {
 	getOperator, err := http.Get(fmt.Sprintf("https://otpweb.com/api?api_key=%s&action=operators", w.APIkey))
 
 	if err != nil {
-		return model.GetOperator{}, err
+		fmt.Println(err)
+		return model.GetOperator{}, model.Error{}
 	}
 
 	defer func(Body io.ReadCloser) {
@@ -26,13 +27,22 @@ func (w *Wrapper) GetOperator() (model.GetOperator, error) {
 
 	body, err := io.ReadAll(getOperator.Body)
 	if err != nil {
-		return model.GetOperator{}, err
+		fmt.Println(err)
+		return model.GetOperator{}, model.Error{}
 	}
 
 	err = json.Unmarshal(body, &data)
 	if err != nil {
-		return model.GetOperator{}, err
+		fmt.Println(err)
+		return model.GetOperator{}, model.Error{}
 	}
 
-	return data, nil
+	if !data.Status {
+		var errorResp model.Error
+		json.Unmarshal(body, &errorResp)
+
+		return model.GetOperator{}, errorResp
+	}
+
+	return data, model.Error{}
 }
