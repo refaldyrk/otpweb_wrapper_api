@@ -59,4 +59,9 @@ resp, err := w.GetSpecialNumber("8")
 ```
 -  serviceID -> string
 
+### Get Status
+```go
+resp, err := w.GetStatus("orderID")
+```
+- orderID -> string
 ### Stay tune for update!
