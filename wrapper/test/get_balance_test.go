@@ -6,7 +6,7 @@ import (
 )
 
 func TestGetBalance(t *testing.T) {
-	apiKey := "d9f09e339e85578a1932dd09fdec15435b486c30"
+	apiKey := ""
 	w := wrapper.NewWrapper(apiKey)
 
 	result, err := w.GetBalance()
