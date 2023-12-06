@@ -31,4 +31,12 @@ country, err := w.GetCountry()
 operator, _ := w.GetOperator()
 ```
 
+### Get Service
+```go
+c, err := w.GetCountry()
+s, err := w.GetService(c.Data[0].ID)
+```
+Param
+>countryID -> int
+
 ### Stay tune for update!
