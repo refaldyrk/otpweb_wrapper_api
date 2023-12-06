@@ -1,6 +1,6 @@
 package model
 
-type GetCoutry struct {
+type GetCountry struct {
 	Status bool `json:"status"`
 	Data   []struct {
 		ID   int    `json:"id"`

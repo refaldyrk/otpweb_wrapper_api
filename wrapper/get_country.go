@@ -8,11 +8,11 @@ import (
 	"net/http"
 )
 
-func (w *Wrapper) GetCountry() (model.GetCoutry, error) {
+func (w *Wrapper) GetCountry() (model.GetCountry, error) {
 	getCountry, err := http.Get(fmt.Sprintf("https://otpweb.com/api?api_key=%s&action=country", w.APIkey))
 
 	if err != nil {
-		return model.GetCoutry{}, err
+		return model.GetCountry{}, err
 	}
 
 	defer func(Body io.ReadCloser) {
@@ -22,16 +22,16 @@ func (w *Wrapper) GetCountry() (model.GetCoutry, error) {
 			return
 		}
 	}(getCountry.Body)
-	var data model.GetCoutry
+	var data model.GetCountry
 
 	body, err := io.ReadAll(getCountry.Body)
 	if err != nil {
-		return model.GetCoutry{}, err
+		return model.GetCountry{}, err
 	}
 
 	err = json.Unmarshal(body, &data)
 	if err != nil {
-		return model.GetCoutry{}, err
+		return model.GetCountry{}, err
 	}
 
 	return data, nil

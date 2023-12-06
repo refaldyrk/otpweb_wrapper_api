@@ -26,4 +26,9 @@ result, err := w.GetBalance()
 country, err := w.GetCountry()
 ```
 
+### Get Operator
+```go
+operator, _ := w.GetOperator()
+```
+
 ### Stay tune for update!
