@@ -11,8 +11,8 @@ go get github.com/refaldyrk/otpweb_wrapper_api
 ## Usage
 
 <h3>Create Wrapper...</h3>
-```go
 
+```go
 w := wrapper.NewWrapper("apikey")
 ```
 
