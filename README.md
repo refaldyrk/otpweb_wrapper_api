@@ -64,4 +64,11 @@ resp, err := w.GetSpecialNumber("8")
 resp, err := w.GetStatus("orderID")
 ```
 - orderID -> string
+
+### Change Status
+```go
+resp, err := w.ChangeStatus("orderID", "cancel")
+```
+- orderID -> string
+- status -string
 ### Stay tune for update!

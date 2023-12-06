@@ -46,3 +46,42 @@ func (w *Wrapper) GetStatus(orderID string) (model.GetStatus, model.Error) {
 
 	return data, model.Error{}
 }
+
+func (w *Wrapper) ChangeStatus(orderID string, status string) model.Error {
+	getStatus, err := http.Get(fmt.Sprintf("https://otpweb.com/api?api_key=%s&action=set_status&order_id=%s&status=%s", w.APIkey, orderID, status))
+
+	if err != nil {
+		fmt.Println(err)
+		return model.Error{}
+	}
+
+	defer func(Body io.ReadCloser) {
+		err := Body.Close()
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+	}(getStatus.Body)
+	var data model.Error
+
+	body, err := io.ReadAll(getStatus.Body)
+	if err != nil {
+		fmt.Println(err)
+		return model.Error{}
+	}
+
+	err = json.Unmarshal(body, &data)
+	if err != nil {
+		fmt.Println(err)
+		return model.Error{}
+	}
+
+	if !data.Status {
+		var errorResp model.Error
+		json.Unmarshal(body, &errorResp)
+
+		return errorResp
+	}
+
+	return data
+}
