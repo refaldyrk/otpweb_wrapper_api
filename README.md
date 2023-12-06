@@ -53,5 +53,10 @@ Param
 -  serviceID -> string
 - operator (optional) -> string
 
+### Get Special Number
+```go
+resp, err := w.GetSpecialNumber("8")
+```
+-  serviceID -> string
 
 ### Stay tune for update!
