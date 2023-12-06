@@ -39,4 +39,9 @@ s, err := w.GetService(c.Data[0].ID)
 Param
 >countryID -> int
 
+### Get Special Service
+```go
+ss, err := w.GetSpecialService()
+```
+
 ### Stay tune for update!

@@ -9,3 +9,12 @@ type GetService struct {
 		Count       int64  `json:"count"`
 	} `json:"data"`
 }
+
+type GetSpecialService struct {
+	Status bool `json:"status"`
+	Data   []struct {
+		ID    string `json:"id"`
+		Nama  string `json:"nama"`
+		Harga string `json:"harga"`
+	} `json:"data"`
+}
