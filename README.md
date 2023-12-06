@@ -1,7 +1,6 @@
 # OTPWEB-WRAPPER-API
 Ini adalah unofficial [OtpWeb Wrapper API](https://otpweb.com/api-docs).
 
-### Still Development
 
 ## Install
 ```bash
