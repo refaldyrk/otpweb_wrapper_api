@@ -44,4 +44,14 @@ Param
 ss, err := w.GetSpecialService()
 ```
 
+### Get Number
+```go
+n, err := w.GetNumber(6, "go", "")
+```
+Param
+- countryID -> int
+-  serviceID -> string
+- operator (optional) -> string
+
+
 ### Stay tune for update!
